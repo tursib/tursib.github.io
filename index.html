@@ -33,7 +33,7 @@
         $(document).ready(function () {
 
             // Send an AJAX request
-            $.getJSON('../api/Buses')
+            $.getJSON('http://publictransportationapi.azurewebsites.net/api/Buses')
                 .done(function (buses) {
                     $.each(buses, function (key, value) {      
                         $('#buses').append('<option value="' + value.Id + '">' + value.Number + '</option>');
@@ -45,7 +45,7 @@
                 var data = {
                     busGuid: selecteBusId
                 }
-                $.getJSON('../api/Stations', data)
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Stations', data)
                .done(function (stations) {
                    $('#stations').empty();
                    $.each(stations, function (key, value) {
@@ -63,7 +63,7 @@
                     stationGuid: selectedStationId
                 }
 
-                $.getJSON('../api/Next', data)
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', data)
                .done(function (time) {
                    $('#nextBusTime').empty();
                     $('#nextBusTime').append(time);
