@@ -22,8 +22,8 @@
           <h1></h1>Next Bus</h1>
         </header>
         
-        <select id="buses"><option>Alege un autobuz</option></select>
-        <select id="stations">Alege statie</select>
+        <select id="buses"></select>
+        <select id="stations"></select>
         <label id="nextBusTime"></label>
 
       </div>
@@ -35,6 +35,7 @@
             // Send an AJAX request
             $.getJSON('http://publictransportationapi.azurewebsites.net/api/Buses')
                 .done(function (buses) {
+                    $('#buses').append('<option value="">Choose Bus</option>');
                     $.each(buses, function (key, value) {      
                         $('#buses').append('<option value="' + value.Id + '">' + value.Number + '</option>');
                     });
@@ -48,6 +49,7 @@
                 $.getJSON('http://publictransportationapi.azurewebsites.net/api/Stations', data)
                .done(function (stations) {
                    $('#stations').empty();
+                   $('#stations').append('<option value="">Choose Station</option>');
                    $.each(stations, function (key, value) {
                        $('#stations').append('<option value="' + value.Id + '">' + value.Name + '</option>');
                    });
