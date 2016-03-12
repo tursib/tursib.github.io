@@ -89,7 +89,7 @@
                     stationName: "THEODOR MIHALY I"
                 }
 
-                $.getJSON('../api/Next', workData)
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
                     .done(function (time) {
                         $('#toWorkStation').empty();
 
@@ -106,7 +106,7 @@
                     stationName: "BILLA"
                 }
 
-                $.getJSON('../api/Next', homeData)
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', homeData)
                .done(function (time) {
                    $('#toHomeStation').empty();
                    $('#toHomeStation').append("Go Home " + time);
