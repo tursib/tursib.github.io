@@ -22,6 +22,9 @@
           <h1></h1>Next Bus</h1>
         </header>
         
+        <div id="toWorkStation" class="showStation"></div>
+        <div id="toHomeStation" class="showStation"></div>
+        
         <select id="buses"></select>
         <select id="stations"></select>
         <label id="nextBusTime"></label>
@@ -40,7 +43,9 @@
                         $('#buses').append('<option value="' + value.Id + '">' + value.Number + '</option>');
                     });
                 });
-
+            
+            Go();
+            
             $('#buses').on('change', function () {
                 var selecteBusId = $(this).find("option:selected").val();
                 var data = {
@@ -74,6 +79,40 @@
             });
 
         });
+        
+        function Go() {
+            var today = new Date();
+            var hour = today.getHours();
+            if (hour > 18) {
+                var workData = {
+                    busNumber: 5,
+                    stationName: "THEODOR MIHALY I"
+                }
+
+                $.getJSON('../api/Next', workData)
+                    .done(function (time) {
+                        $('#toWorkStation').empty();
+
+                        var isWeekend = (today.getDay() == 6) || (today.getDay() == 0);
+                        var whereToGo = "Go to work at: ";
+                        if (isWeekend) {
+                            whereToGo = "Go to town center at: ";
+                        }
+                        $('#toWorkStation').append(whereToGo + time);
+                    });
+            } else {
+                var homeData = {
+                    busNumber: 5,
+                    stationName: "BILLA"
+                }
+
+                $.getJSON('../api/Next', homeData)
+               .done(function (time) {
+                   $('#toHomeStation').empty();
+                   $('#toHomeStation').append("Go Home " + time);
+               });
+            }
+        }
     </script>
 
   </body>
