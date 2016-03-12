@@ -66,6 +66,7 @@
 			UserApp.OAuth.getAuthorizationUrl({ provider_id: 'facebook', redirect_uri: 'http://tursib.github.io/' }, 
 				function(error, result) {
 					if (!error) {
+						Cookies.set("ua_session_token", UserApp.global.token);
 						window.location.href = result.authorization_url;
 					}
 				}
