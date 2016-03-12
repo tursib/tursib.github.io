@@ -22,6 +22,11 @@
 		var currentUser = null; // This will contain the logged in user
 		debugger
 		// Check if there is a session cookie
+		var queryString = getUrlVars();
+		if (queryString.ua_token)
+		{
+			Cookies.set("ua_session_token", queryString.ua_token);
+		}
 		var token = Cookies.get("ua_session_token");
 		if (token) {
 			// Yes, there is
