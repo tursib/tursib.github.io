@@ -1,119 +1,97 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <script   src="https://code.jquery.com/jquery-2.2.1.min.js"   integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="   crossorigin="anonymous"></script>
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>Next Bus</title>
-  </head>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <body>
-    <div id="container">
-      <div class="inner">
+	<title>Welcome to MyApp</title>
 
-        <header>
-          <h1></h1>Next Bus</h1>
-        </header>
-        
-        <div id="toWorkStation" class="showStation"></div>
-        <div id="toHomeStation" class="showStation"></div>
-        
-        <select id="buses"></select>
-        <select id="stations"></select>
-        <label id="nextBusTime"></label>
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css">
 
-      </div>
-    </div>
-    
-        <script>
-        $(document).ready(function () {
+	<!-- Custom styles -->
+	<link rel="stylesheet" href="https://app.userapp.io/css/demo/tutorial.css">
 
-            // Send an AJAX request
-            $.getJSON('http://publictransportationapi.azurewebsites.net/api/Buses')
-                .done(function (buses) {
-                    $('#buses').append('<option value="">Choose Bus</option>');
-                    $.each(buses, function (key, value) {      
-                        $('#buses').append('<option value="' + value.Id + '">' + value.Number + '</option>');
-                    });
-                });
-            
-            Go();
-            
-            $('#buses').on('change', function () {
-                var selecteBusId = $(this).find("option:selected").val();
-                var data = {
-                    busGuid: selecteBusId
-                }
-                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Stations', data)
-               .done(function (stations) {
-                   $('#stations').empty();
-                   $('#stations').append('<option value="">Choose Station</option>');
-                   $.each(stations, function (key, value) {
-                       $('#stations').append('<option value="' + value.Id + '">' + value.Name + '</option>');
-                   });
-                   $('#stations').show();
-               });  
-            });
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="https://app.userapp.io/js/userapp.client.js"></script>
+	<script src="libs/cookies.min.js"></script>
+	<script src="common.js"></script>
+	<script>
+		var currentUser = null; // This will contain the logged in user
 
-            $('#stations').on('change', function () {
-                var selectedStationId = $(this).find("option:selected").val();
-                var selectedBusId = $("#buses").find("option:selected").val();
-                var data = {
-                    busGuid: selectedBusId,
-                    stationGuid: selectedStationId
-                }
+		// Check if there is a session cookie
+		var token = Cookies.get("ua_session_token");
+		if (token) {
+			// Yes, there is
+			UserApp.setToken(token);
 
-                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', data)
-               .done(function (time) {
-                   $('#nextBusTime').empty();
-                    $('#nextBusTime').append(time);
-                   $('#nextBusTime').show();
-               });
-            });
+			// Get the logged in user
+			getCurrentUser(function(user) {
+				if (user) {
+					currentUser = user;
+					onUserLoaded();
+				} else {
+					window.location.href = "login.html";
+				}
+			});
+		} else {
+			// No, redirect the user to the login.html page
+			window.location.href = "login.html";
+		}
 
-        });
-        
-        function Go() {
-            var today = new Date();
-            var hour = today.getHours();
-            if (hour > 18) {
-                var workData = {
-                    busNumber: 5,
-                    stationName: "THEODOR MIHALY I"
-                }
+		// When the user has loaded
+		function onUserLoaded() {
+			// Print the name
+			document.getElementById("name").innerHTML = currentUser.first_name;
 
-                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
-                    .done(function (time) {
-                        $('#toWorkStation').empty();
+      		// Load articles from back-end
+      		getArticles();
+		}
 
-                        var isWeekend = (today.getDay() == 6) || (today.getDay() == 0);
-                        var whereToGo = "Go to work at: ";
-                        if (isWeekend) {
-                            whereToGo = "Go to town center at: ";
-                        }
-                        $('#toWorkStation').append(whereToGo + time);
-                    });
-            } else {
-                var homeData = {
-                    busNumber: 5,
-                    stationName: "BILLA"
-                }
+		// Get the logged in user
+		function getCurrentUser(callback) {
+			UserApp.User.get({ user_id: "self" }, function(error, user) {
+				if (error) {
+					callback && callback(null);
+				} else {
+					callback && callback(user[0]);
+				}
+			});
+		}
 
-                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', homeData)
-               .done(function (time) {
-                   $('#toHomeStation').empty();
-                   $('#toHomeStation').append("Go Home " + time);
-               });
-            }
-        }
-    </script>
+	    // Get this user's articles from the back-end
+	    function getArticles() {
+			$.get("articles", function(data) {
+				if (data) {
+					$("#articles").html("");
 
-  </body>
+					for (var i = 0; i < data.length; ++i) {
+						$("#articles").append($("<li></li>").text(data[i].title));
+					}
+				}
+			}, "json");
+	    }
+
+		// Logout function
+		function logout() {
+			Cookies.expire("ua_session_token");
+			UserApp.User.logout(function() {
+				window.location.href = "login.html";
+			});
+		}
+	</script>
+</head>
+<body>
+	<div class="container">
+		<h1 class="form-heading">Welcome to MyApp, <span id="name"></span>!</h1>
+		<a href="javascript:logout()">Log out</a>
+	</div> 
+	<div class="container" style="margin-top: 50px;">
+		<ul id="articles">
+	      Loading articles...  
+	    </ul>
+	</div>
+</body>
 </html>
