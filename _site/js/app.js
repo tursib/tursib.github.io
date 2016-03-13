@@ -94,7 +94,7 @@ Vidpub.loginFacebook= function(next){
       var userData = {
         name: authData.facebook.displayName,
         email: authData.facebook.email,
-        githubber: true
+        githubber: false
       }
       Vidpub.saveUser(authData.uid, userData, next);
 
@@ -116,7 +116,7 @@ Vidpub.loginGoogle= function(next){
       var userData = {
         name: authData.google.displayName,
         email: authData.google.email,
-        githubber: true
+        githubber: false
       }
       Vidpub.saveUser(authData.uid, userData, next);
 
@@ -173,6 +173,12 @@ var personalize = function(user){
     })
   }
   ko.applyBindings(ViewModel);
+
+  	if(user == null && window.location.pathname != "/account/login.html")
+	{
+		window.location.href = "/account/login.html";
+	}
+  
 }
 
 Vidpub.canSeeTutorials = function(user){

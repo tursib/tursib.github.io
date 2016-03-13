@@ -2,20 +2,12 @@
 layout: page
 ---
 
-  <div class="page-header" id="banner">
+  <div class="page-header" id="banner" data-bind="visible: isLoggedIn">
     <div class="row">
       <div class="col-lg-8 col-md-7 col-sm-6">
-        <h1>Vidpub</h1>
-        <p class="lead">We are video, and so can you</p>
+        <h1>Next Bus</h1>
+        <p class="lead">Configure</p>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-3 col-md-3 col-sm-4">
-        <div class="list-group table-of-contents">
-          {% for post in site.posts %}
-          <a class="list-group-item" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
+   
   </div>
