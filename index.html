@@ -12,7 +12,7 @@ layout: page
 <ul id="background"><li class="fadein image"></li></ul>
 <div id="settings-container"></div>
 <div class="widgets fadein">
-<div id="full"><div id="introduction" class="light" style="opacity: 1;"><p class="logo"><img src="../../img/logo-white.png"></p>
+<div id="full"><div id="introduction" class="light" style="opacity: 1;">
 <p class="content"><span style="opacity: 1; display: inline;"><div class="prompt" id="time">
 
     <div class="tip"></div>
@@ -68,7 +68,7 @@ layout: page
         function Go() {
             var today = new Date();
             var hour = today.getHours();
-            if (hour > 18) {
+            if (hour >= 18) {
                 var workData = {
                     busNumber: 5,
                     stationName: "THEODOR MIHALY I"
