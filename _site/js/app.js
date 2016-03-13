@@ -92,8 +92,8 @@ Vidpub.loginFacebook= function(next){
       }
     } else if (authData) {
       var userData = {
-        name: authData.github.displayName,
-        email: authData.github.email,
+        name: authData.facebook.displayName,
+        email: authData.facebook.email,
         githubber: true
       }
       Vidpub.saveUser(authData.uid, userData, next);
@@ -114,8 +114,8 @@ Vidpub.loginGoogle= function(next){
       }
     } else if (authData) {
       var userData = {
-        name: authData.github.displayName,
-        email: authData.github.email,
+        name: authData.google.displayName,
+        email: authData.google.email,
         githubber: true
       }
       Vidpub.saveUser(authData.uid, userData, next);
