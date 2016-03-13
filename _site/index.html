@@ -132,13 +132,14 @@
                 $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
                     .done(function (time) {
                         $('#time').empty();
-
+						$('#time').hide();
                         var isWeekend = (today.getDay() == 6) || (today.getDay() == 0);
                         var whereToGo = "Go to work at: ";
                         if (isWeekend) {
                             whereToGo = "Go to town center at: ";
                         }
                         $('#time').append(whereToGo + time);
+						$('#time').fadeIn();
                     });
             } else {
                 var homeData = {
@@ -149,7 +150,9 @@
                 $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', homeData)
                .done(function (time) {
                    $('#time').empty();
+				   $('#time').hide();
                    $('#time').append("Go Home " + time);
+				   $('#time').fadeIn();
                });
             }
         }
