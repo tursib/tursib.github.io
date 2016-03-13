@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tursib</title>
+    <description></description>
+    <link>http://tursib.github.io/</link>
+    <atom:link href="http://tursib.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 13 Mar 2016 10:38:26 +0200</pubDate>
+    <lastBuildDate>Sun, 13 Mar 2016 10:38:26 +0200</lastBuildDate>
+    <generator>Jekyll v3.0.1</generator>
+    
+      <item>
+        <title>Rocket Pack Basics</title>
+        <description>&lt;h2 id=&quot;description&quot;&gt;Description&lt;/h2&gt;
+</description>
+        <pubDate>Wed, 11 Nov 2015 00:00:00 +0200</pubDate>
+        <link>http://tursib.github.io/products/rocketpack-basics</link>
+        <guid isPermaLink="true">http://tursib.github.io/products/rocketpack-basics</guid>
+        
+        <category>burning-buns,smashed-visor,fastfastfast</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Returning Home Without a Rocket</title>
+        <description>&lt;h2 id=&quot;description&quot;&gt;Description&lt;/h2&gt;
+</description>
+        <pubDate>Wed, 11 Nov 2015 00:00:00 +0200</pubDate>
+        <link>http://tursib.github.io/products/returning-to-earth-without-a-rocket</link>
+        <guid isPermaLink="true">http://tursib.github.io/products/returning-to-earth-without-a-rocket</guid>
+        
+        <category>oh,my,god</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Piloting a MAV Without a Roof</title>
+        <description>&lt;h2 id=&quot;description&quot;&gt;Description&lt;/h2&gt;
+</description>
+        <pubDate>Wed, 11 Nov 2015 00:00:00 +0200</pubDate>
+        <link>http://tursib.github.io/products/piloting-a-mav-without-a-roof</link>
+        <guid isPermaLink="true">http://tursib.github.io/products/piloting-a-mav-without-a-roof</guid>
+        
+        <category>fast,windy,12-gees</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Detecting a Pending Alien Invasion</title>
+        <description>&lt;h2 id=&quot;description&quot;&gt;Description&lt;/h2&gt;
+</description>
+        <pubDate>Wed, 11 Nov 2015 00:00:00 +0200</pubDate>
+        <link>http://tursib.github.io/products/detecting-a-pending-alien-invasion</link>
+        <guid isPermaLink="true">http://tursib.github.io/products/detecting-a-pending-alien-invasion</guid>
+        
+        <category>aliens,run,die</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Coping With Red</title>
+        <description>&lt;h2 id=&quot;description&quot;&gt;Description&lt;/h2&gt;
+</description>
+        <pubDate>Wed, 11 Nov 2015 00:00:00 +0200</pubDate>
+        <link>http://tursib.github.io/products/coping-with-red</link>
+        <guid isPermaLink="true">http://tursib.github.io/products/coping-with-red</guid>
+        
+        <category>red,red,red</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Breathing on Mars Without a Suit</title>
+        <description>&lt;h2 id=&quot;description&quot;&gt;Description&lt;/h2&gt;
+</description>
+        <pubDate>Wed, 11 Nov 2015 00:00:00 +0200</pubDate>
+        <link>http://tursib.github.io/products/breathing-on-mars-without-a-suit</link>
+        <guid isPermaLink="true">http://tursib.github.io/products/breathing-on-mars-without-a-suit</guid>
+        
+        <category>breath,death,life</category>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

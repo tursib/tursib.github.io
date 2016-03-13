@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <script   src="https://code.jquery.com/jquery-2.2.1.min.js"   integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="   crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Next Bus</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1></h1>Next Bus</h1>
+        </header>
+        
+        <div id="toWorkStation" class="showStation"></div>
+        <div id="toHomeStation" class="showStation"></div>
+        
+        <select id="buses"></select>
+        <select id="stations"></select>
+        <label id="nextBusTime"></label>
+
+      </div>
+    </div>
+    
+        <script>
+        $(document).ready(function () {
+
+            // Send an AJAX request
+            $.getJSON('http://publictransportationapi.azurewebsites.net/api/Buses')
+                .done(function (buses) {
+                    $('#buses').append('<option value="">Choose Bus</option>');
+                    $.each(buses, function (key, value) {      
+                        $('#buses').append('<option value="' + value.Id + '">' + value.Number + '</option>');
+                    });
+                });
+            
+            Go();
+            
+            $('#buses').on('change', function () {
+                var selecteBusId = $(this).find("option:selected").val();
+                var data = {
+                    busGuid: selecteBusId
+                }
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Stations', data)
+               .done(function (stations) {
+                   $('#stations').empty();
+                   $('#stations').append('<option value="">Choose Station</option>');
+                   $.each(stations, function (key, value) {
+                       $('#stations').append('<option value="' + value.Id + '">' + value.Name + '</option>');
+                   });
+                   $('#stations').show();
+               });  
+            });
+
+            $('#stations').on('change', function () {
+                var selectedStationId = $(this).find("option:selected").val();
+                var selectedBusId = $("#buses").find("option:selected").val();
+                var data = {
+                    busGuid: selectedBusId,
+                    stationGuid: selectedStationId
+                }
+
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', data)
+               .done(function (time) {
+                   $('#nextBusTime').empty();
+                    $('#nextBusTime').append(time);
+                   $('#nextBusTime').show();
+               });
+            });
+
+        });
+        
+        function Go() {
+            var today = new Date();
+            var hour = today.getHours();
+            if (hour > 18) {
+                var workData = {
+                    busNumber: 5,
+                    stationName: "THEODOR MIHALY I"
+                }
+
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
+                    .done(function (time) {
+                        $('#toWorkStation').empty();
+
+                        var isWeekend = (today.getDay() == 6) || (today.getDay() == 0);
+                        var whereToGo = "Go to work at: ";
+                        if (isWeekend) {
+                            whereToGo = "Go to town center at: ";
+                        }
+                        $('#toWorkStation').append(whereToGo + time);
+                    });
+            } else {
+                var homeData = {
+                    busNumber: 5,
+                    stationName: "BILLA"
+                }
+
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', homeData)
+               .done(function (time) {
+                   $('#toHomeStation').empty();
+                   $('#toHomeStation').append("Go Home " + time);
+               });
+            }
+        }
+    </script>
+
+  </body>
+</html>

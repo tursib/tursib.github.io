@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Log in to MyApp</title>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css">
+
+<!-- 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
+
+
+	<!-- Custom styles -->
+	<link rel="stylesheet" href="https://app.userapp.io/css/demo/tutorial.css">
+	<link rel="stylesheet" href="stylesheets/login.css">
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="https://app.userapp.io/js/userapp.client.js"></script>
+	<script src="libs/cookies.min.js"></script>
+	<script src="common.js"></script>
+	<script src="knockout-3.3.0.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+	<script src="app.js"></script>
+
+	<script>
+		$(function(){
+			Vidpub.start();
+		});
+		
+		// Function to show and hide the loader anim
+		function showLoader(show) {
+			document.getElementById("loader").style.display = (show ? "block" : "none");
+		}
+
+		// Login the user
+		function login() {
+			// Show the loader
+			showLoader(true);
+			Vidpub.loginWithEmailPassword({
+				email    : $("#username").val(),
+				password : $("#password").val(),
+				remember : $("#remember").prop("checked")
+			  }, function(err,res){
+				if(err){
+				  $("#error").text(err);
+				  showLoader(false);
+				}else{
+				   onLoginSuccessful();
+				}
+			});
+			return false;
+		}
+
+		// When the user has been logged in successfully
+		function onLoginSuccessful() {
+			window.location.href = "index.html";
+			showLoader(false);
+		}
+		
+		function facebookLogin()
+		{debugger
+			 Vidpub.loginGithub(function(err,res){
+				if(err){
+				  $("#error").text(err);
+				  showLoader(false);
+				}else{
+				debugger
+				 onLoginSuccessful();
+				}
+			  });
+			return false;
+		}
+	</script>
+</head>
+<body>
+<a href="/account/profile"><span data-bind="text: name"></span></a>
+        <a href="#" data-bind="click: login_or_out"><span data-bind="text: login_or_out_button"></span></a>
+		
+	<div class="container">
+		<form onsubmit="return login()">
+		<div class="omb_login">
+			<h3 class="omb_authTitle">Login or <a href="signup.html">Sign up</a></h3>
+			<div class="row omb_row-sm-offset-3 omb_socialButtons">
+				<div class="col-xs-4 col-sm-2">
+					<a href="#" class="btn btn-lg btn-block omb_btn-facebook" onclick="return facebookLogin()">
+						<i class="fa fa-facebook visible-xs"></i>
+						<span class="hidden-xs">Facebook</span>
+					</a>
+				</div>
+				<div class="col-xs-4 col-sm-2">
+					<a href="#" class="btn btn-lg btn-block omb_btn-twitter">
+						<i class="fa fa-twitter visible-xs"></i>
+						<span class="hidden-xs">Twitter</span>
+					</a>
+				</div>	
+				<div class="col-xs-4 col-sm-2">
+					<a href="#" class="btn btn-lg btn-block omb_btn-google">
+						<i class="fa fa-google-plus visible-xs"></i>
+						<span class="hidden-xs">Google+</span>
+					</a>
+				</div>	
+			</div>
+
+			<div class="row omb_row-sm-offset-3 omb_loginOr">
+				<div class="col-xs-12 col-sm-6">
+					<hr class="omb_hrOr">
+					<span class="omb_spanOr">or</span>
+				</div>
+			</div>
+			<img id="loader" src="img/ajax-loader.gif" style="display: none; margin: 30px auto;">
+			<div class="row omb_row-sm-offset-3">
+				<div class="col-xs-12 col-sm-6">	
+					<form class="omb_loginForm" action="" autocomplete="off" method="POST">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<input type="text" class="form-control" name="username" id="username" placeholder="email address">
+						</div>
+						<span class="help-block"></span>
+											
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+							<input  type="password" class="form-control" name="password" id="password" placeholder="Password">
+						</div>
+
+						<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+					</form>
+				</div>
+			</div>
+			<div class="row omb_row-sm-offset-3">
+				<div class="col-xs-12 col-sm-3">
+					<label class="checkbox">
+						<input type="checkbox" value="remember-me">Remember Me
+					</label>
+				</div>
+				<div class="col-xs-12 col-sm-3">
+					<p class="omb_forgotPwd">
+						<a href="#">Forgot password?</a>
+					</p>
+				</div>
+			</div>	    	
+		</div>
+		</form>
+	</div>
+</body>
+</html>
