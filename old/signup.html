@@ -17,7 +17,13 @@
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="https://app.userapp.io/js/userapp.client.js"></script>
 	<script src="common.js"></script>
+	<script src="knockout-3.3.0.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+	<script src="app.js"></script>
 	<script>
+		$(function(){
+			Vidpub.start();
+		});
 		// Function to show and hide the loader anim
 		function showLoader(show) {
 			document.getElementById("loader").style.display = (show ? "block" : "none");
@@ -26,26 +32,19 @@
 		function signup() {
 			// Show the loader
 			showLoader(true);
-
-			// This will sign up the user
-			UserApp.User.save({
-				login: document.getElementById("username").value,
-				first_name: document.getElementById("name").value,
-				email: document.getElementById("email").value,
-				password: document.getElementById("password").value
-			}, function(error, user) {
-				if (error) {
-					alert("Error: " + error.message);
-				} else {
-					alert("Thanks for signing up!");
-					
-					// Redirect to login page
-					window.location.href = "login.html";
-				}
-
-				showLoader(false);
-			});
 			
+			 Vidpub.createUser({
+			  email    : $("#email").val(),
+			  name    : $("#name").val(),
+			  password : $("#password").val()
+			}, function(err,userData){
+			  if(err){
+				$("#error").text(err);
+			  }else{
+				window.location.href = "login.html";
+			  }
+			  showLoader(false);
+			});			
 			return false;
 		}
 	</script>
