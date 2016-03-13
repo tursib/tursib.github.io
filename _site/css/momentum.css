@@ -1,0 +1,65 @@
+.loading-container {
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-shadow:before, .loading-container, .widgets {
+    left: 0;
+    top: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.loading-logo {
+    height: 70px;
+    margin-top: -10px;
+    opacity: 0;
+    -webkit-animation: fadein 1s linear 1s forwards;
+}
+
+.fadein {
+    -webkit-animation: fadein .5s ease 0s forwards;
+}
+
+.image{
+	-webkit-animation: fadein .5s ease 0s forwards;
+	 background: url(../img/background.jpg);
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background: url(../img/overlay-vignette.png);
+    background-size: 100% 100%;
+    opacity: 0;
+}
+
+#background {
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+#background, #background li {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+#background, #background li {
+    background-color: transparent;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+ol, ul {
+    padding: 0;
+    list-style: none;
+}
