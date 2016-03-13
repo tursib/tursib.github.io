@@ -57,15 +57,104 @@
 
 
     <div class="container" style="padding-top: 80px;padding-bottom:120px;">
-    <div class="page-header" id="banner" data-bind="visible: isLoggedIn">
-    <div class="row">
-      <div class="col-lg-8 col-md-7 col-sm-6">
-        <h1>Next Bus</h1>
-        <p class="lead">Configure</p>
-      </div>
-    </div>
-   
-  </div>
+  <link rel="stylesheet" href="/css/momentum.css">
+<link rel="stylesheet" href="/css/momentum2.css">
+<style type="text/css">.widget-pop{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
+<div class="loading-container">
+	<img src="../../img/logo-grey.png" class="loading-logo">
+</div>
+<div class="background-overlay fadein"></div>
+<ul id="background"><li class="fadein image"></li></ul>
+<div id="settings-container"></div>
+<div class="widgets fadein">
+<div id="full"><div id="introduction" class="light" style="opacity: 1;"><p class="logo"><img src="../../img/logo-white.png"></p>
+<p class="content"><span style="opacity: 1; display: inline;"><div class="prompt" id="time">
+
+    <div class="tip"></div>
+</div>
+<script>
+        $(document).ready(function () {
+
+            // Send an AJAX request
+            $.getJSON('http://publictransportationapi.azurewebsites.net/api/Buses')
+                .done(function (buses) {
+                    $('#buses').append('<option value="">Choose Bus</option>');
+                    $.each(buses, function (key, value) {      
+                        $('#buses').append('<option value="' + value.Id + '">' + value.Number + '</option>');
+                    });
+                });
+            
+            Go();
+            
+            $('#buses').on('change', function () {
+                var selecteBusId = $(this).find("option:selected").val();
+                var data = {
+                    busGuid: selecteBusId
+                }
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Stations', data)
+               .done(function (stations) {
+                   $('#stations').empty();
+                   $('#stations').append('<option value="">Choose Station</option>');
+                   $.each(stations, function (key, value) {
+                       $('#stations').append('<option value="' + value.Id + '">' + value.Name + '</option>');
+                   });
+                   $('#stations').show();
+               });  
+            });
+
+            $('#stations').on('change', function () {
+                var selectedStationId = $(this).find("option:selected").val();
+                var selectedBusId = $("#buses").find("option:selected").val();
+                var data = {
+                    busGuid: selectedBusId,
+                    stationGuid: selectedStationId
+                }
+
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', data)
+               .done(function (time) {
+                   $('#nextBusTime').empty();
+                    $('#nextBusTime').append(time);
+                   $('#nextBusTime').show();
+               });
+            });
+
+        });
+        
+        function Go() {
+            var today = new Date();
+            var hour = today.getHours();
+            if (hour > 18) {
+                var workData = {
+                    busNumber: 5,
+                    stationName: "THEODOR MIHALY I"
+                }
+
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
+                    .done(function (time) {
+                        $('#time').empty();
+
+                        var isWeekend = (today.getDay() == 6) || (today.getDay() == 0);
+                        var whereToGo = "Go to work at: ";
+                        if (isWeekend) {
+                            whereToGo = "Go to town center at: ";
+                        }
+                        $('#time').append(whereToGo + time);
+                    });
+            } else {
+                var homeData = {
+                    busNumber: 5,
+                    stationName: "BILLA"
+                }
+
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', homeData)
+               .done(function (time) {
+                   $('#time').empty();
+                   $('#time').append("Go Home " + time);
+               });
+            }
+        }
+    </script>
+</script>
 
 </div>
 <script>

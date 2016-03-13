@@ -174,10 +174,10 @@ var personalize = function(user){
   }
   ko.applyBindings(ViewModel);
 
-  	if(user == null && window.location.pathname != "/account/login.html")
-	{
-		window.location.href = "/account/login.html";
-	}
+  	// if(user == null && window.location.pathname != "/account/login.html")
+	// {
+		// window.location.href = "/account/login.html";
+	// }
   
 }
 
