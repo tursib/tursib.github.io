@@ -59,6 +59,7 @@ Vidpub.loginWithEmailPassword = function(credentials, next){
 
 Vidpub.loginGithub = function(next){
   Vidpub.dbRef.authWithOAuthPopup("github", function(error, authData) {
+	  debugger
     if (error) {
       if (error.code === "TRANSPORT_UNAVAILABLE") {
         // fall-back to browser redirects, and pick up the session
@@ -85,7 +86,7 @@ Vidpub.loginFacebook= function(next){
       if (error.code === "TRANSPORT_UNAVAILABLE") {
         // fall-back to browser redirects, and pick up the session
         // automatically when we come back to the origin page
-        ref.authWithOAuthRedirect("github", function(error) {
+        ref.authWithOAuthRedirect("facebook", function(error) {
           next(err,null);
         });
       }
@@ -107,7 +108,7 @@ Vidpub.loginGoogle= function(next){
       if (error.code === "TRANSPORT_UNAVAILABLE") {
         // fall-back to browser redirects, and pick up the session
         // automatically when we come back to the origin page
-        ref.authWithOAuthRedirect("github", function(error) {
+        ref.authWithOAuthRedirect("google", function(error) {
           next(err,null);
         });
       }
