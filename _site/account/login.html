@@ -79,18 +79,29 @@
   <div class="omb_login">
     <h3 class="omb_authTitle">Login or <a href="/account/signup">Sign up</a></h3>
 		<div class="row omb_row-sm-offset-3 omb_socialButtons">
-	    <div class="col-xs-4 col-sm-2">
-        <a href="#" class="btn btn-lg btn-block omb_btn-github" id="github">
-	        <i class="fa fa-github"></i>
-	        <span class="hidden-xs">Github</span>
-        </a>
-      </div>
-    	<div class="col-xs-4 col-sm-2">
-        <a href="#" class="btn btn-lg btn-block omb_btn-google">
-	        <i class="fa fa-google-plus"></i>
-	        <span class="hidden-xs">Google+</span>
-        </a>
-      </div>
+		
+			<div class="col-xs-4 col-sm-2">
+				<a href="#" class="btn btn-lg btn-block omb_btn-facebook" id="facebook">
+					<i class="fa fa-facebook"></i>
+					<span class="hidden-xs">Facebook</span>
+				</a>
+			</div>
+			
+			<div class="col-xs-4 col-sm-2">
+				<a href="#" class="btn btn-lg btn-block omb_btn-google" id="google">
+					<i class="fa fa-google-plus"></i>
+					<span class="hidden-xs">Google+</span>
+				</a>
+			</div>
+			
+			<div class="col-xs-4 col-sm-2">
+				<a href="#" class="btn btn-lg btn-block omb_btn-github" id="github">
+					<i class="fa fa-github"></i>
+					<span class="hidden-xs">Github</span>
+				</a>
+			</div>
+			
+			
 		</div>
 
 		<div class="row omb_row-sm-offset-3 omb_loginOr">
@@ -137,6 +148,28 @@
     $("#github").on("click", function(ev){
       ev.preventDefault();
       Vidpub.loginGithub(function(err,res){
+        if(err){
+          $("#error").text(err);
+        }else{
+          location.href = "/";
+        }
+      });
+    });
+	
+	 $("#facebook").on("click", function(ev){
+      ev.preventDefault();
+      Vidpub.loginFacebook(function(err,res){
+        if(err){
+          $("#error").text(err);
+        }else{
+          location.href = "/";
+        }
+      });
+    });
+	
+	 $("#google").on("click", function(ev){
+      ev.preventDefault();
+      Vidpub.loginGoogle(function(err,res){
         if(err){
           $("#error").text(err);
         }else{

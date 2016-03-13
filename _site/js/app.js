@@ -59,11 +59,56 @@ Vidpub.loginWithEmailPassword = function(credentials, next){
 
 Vidpub.loginGithub = function(next){
   Vidpub.dbRef.authWithOAuthPopup("github", function(error, authData) {
+	  debugger
     if (error) {
       if (error.code === "TRANSPORT_UNAVAILABLE") {
         // fall-back to browser redirects, and pick up the session
         // automatically when we come back to the origin page
         ref.authWithOAuthRedirect("github", function(error) {
+          next(err,null);
+        });
+      }
+    } else if (authData) {
+      var userData = {
+        name: authData.github.displayName,
+        email: authData.github.email,
+        githubber: true
+      }
+      Vidpub.saveUser(authData.uid, userData, next);
+
+    }
+  });
+};
+
+Vidpub.loginFacebook= function(next){
+  Vidpub.dbRef.authWithOAuthPopup("facebook", function(error, authData) {
+    if (error) {
+      if (error.code === "TRANSPORT_UNAVAILABLE") {
+        // fall-back to browser redirects, and pick up the session
+        // automatically when we come back to the origin page
+        ref.authWithOAuthRedirect("facebook", function(error) {
+          next(err,null);
+        });
+      }
+    } else if (authData) {
+      var userData = {
+        name: authData.github.displayName,
+        email: authData.github.email,
+        githubber: true
+      }
+      Vidpub.saveUser(authData.uid, userData, next);
+
+    }
+  });
+};
+
+Vidpub.loginGoogle= function(next){
+  Vidpub.dbRef.authWithOAuthPopup("google", function(error, authData) {
+    if (error) {
+      if (error.code === "TRANSPORT_UNAVAILABLE") {
+        // fall-back to browser redirects, and pick up the session
+        // automatically when we come back to the origin page
+        ref.authWithOAuthRedirect("google", function(error) {
           next(err,null);
         });
       }
