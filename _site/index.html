@@ -123,26 +123,8 @@
         function Go() {
             var today = new Date();
             var hour = today.getHours();
-            if (hour >= 18) {
-                var workData = {
-                    busNumber: 5,
-                    stationName: "THEODOR MIHALY I"
-                }
-
-                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
-                    .done(function (time) {
-                        $('#time').empty();
-						$('#time').hide();
-                        var isWeekend = (today.getDay() == 6) || (today.getDay() == 0);
-                        var whereToGo = "Go to work at: ";
-                        if (isWeekend) {
-                            whereToGo = "Go to town center at: ";
-                        }
-                        $('#time').append(whereToGo + time);
-						$('#time').fadeIn();
-                    });
-            } else {
-                var homeData = {
+            if (hour < 10) {
+            	var homeData = {
                     busNumber: 5,
                     stationName: "BILLA"
                 }
@@ -155,8 +137,40 @@
 				   $('#time').fadeIn();
                });
             }
-        }
-    </script>
+            else if (hour <18){
+                var workData = {
+                    busNumber: 5,
+                    stationName: "THEODOR MIHALY I"
+                }
+
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
+                    .done(function (time) {
+                        $('#time').empty();
+			$('#time').hide();
+                        var isWeekend = (today.getDay() == 6) || (today.getDay() == 0);
+                        var whereToGo = "Go to work at: ";
+                        if (isWeekend) {
+                            whereToGo = "Go to town center at: ";
+                        }
+                        $('#time').append(whereToGo + time);
+						$('#time').fadeIn();
+                    });
+    	 }
+    	 else{
+    	 	var workData = {
+                    busNumber: 5,
+                    stationName: "THEODOR MIHALY I"
+                }
+
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
+                    .done(function (time) {
+                        $('#time').empty();
+			$('#time').hide();
+                        whereToGo = "Go to town center at: ";
+                        $('#time').append(whereToGo + time);
+						$('#time').fadeIn();
+                    });
+    	 }
 </script>
 
 </div>
