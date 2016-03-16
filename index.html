@@ -93,7 +93,7 @@ layout: page
                     stationName: "BILLA"
                 }
 
-                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', homeData)
                     .done(function (time) {
                         $('#time').empty();
 			$('#time').hide();
@@ -108,7 +108,7 @@ layout: page
                     stationName: "THEODOR MIHALY I"
                 }
 
-                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', townCenterData)
                     .done(function (time) {
                         $('#time').empty();
 			$('#time').hide();
