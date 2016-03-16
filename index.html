@@ -69,21 +69,7 @@ layout: page
             var today = new Date();
             var hour = today.getHours();
             if (hour < 10) {
-            	var homeData = {
-                    busNumber: 5,
-                    stationName: "BILLA"
-                }
-
-                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', homeData)
-               .done(function (time) {
-                   $('#time').empty();
-				   $('#time').hide();
-                   $('#time').append("Go Home " + time);
-				   $('#time').fadeIn();
-               });
-            }
-            else if (hour <18){
-                var workData = {
+  		var workData = {
                     busNumber: 5,
                     stationName: "THEODOR MIHALY I"
                 }
@@ -98,11 +84,26 @@ layout: page
                             whereToGo = "Go to town center at: ";
                         }
                         $('#time').append(whereToGo + time);
-						$('#time').fadeIn();
+			$('#time').fadeIn();
+                    });
+            }
+            else if (hour <18){
+               	var homeData = {
+                    busNumber: 5,
+                    stationName: "BILLA"
+                }
+
+                $.getJSON('http://publictransportationapi.azurewebsites.net/api/Next', workData)
+                    .done(function (time) {
+                        $('#time').empty();
+			$('#time').hide();
+                        whereToGo = "Go to home at: ";
+                        $('#time').append(whereToGo + time);
+			$('#time').fadeIn();
                     });
     	 }
     	 else{
-    	 	var workData = {
+    	 	var townCenterData = {
                     busNumber: 5,
                     stationName: "THEODOR MIHALY I"
                 }
@@ -113,7 +114,7 @@ layout: page
 			$('#time').hide();
                         whereToGo = "Go to town center at: ";
                         $('#time').append(whereToGo + time);
-						$('#time').fadeIn();
+			$('#time').fadeIn();
                     });
     	 }
 }
